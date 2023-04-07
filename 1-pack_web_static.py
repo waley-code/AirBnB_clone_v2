@@ -11,5 +11,5 @@ def do_pack():
         p_name = "web_static_{}.tgz".format(time.strftime("%Y%m%d%H%M%S"))
         local("tar -cvzf versions/{} web_static".format(p_name))
         return ("versions/{}".format(p_name))
-    except:
+    except Exception:
         return None

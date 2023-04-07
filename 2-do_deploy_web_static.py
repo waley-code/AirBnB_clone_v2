@@ -5,19 +5,17 @@ from datetime import datetime
 from fabric.api import local, run, put, env
 env.hosts = ['54.174.243.255', '54.208.245.251']
 
+
 # Creates a comperessed_static folder
 def do_pack():
-    """ Creates a comperessed_static folder. """
-
-    local("mkdir -p versions")
-    strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    p_name = f"web_static_{strap_time}.tgz"
-    tar_cmd = f"tar -cvzf versions/{p_name}. web_static"
-    response = local(tar_cmd)
-    if response.failed:
+    """Creates a .tgz archive compressing its contents web_static folder"""
+    try:
+        local("mkdir -p versions")
+        p_name = "web_static_{}.tgz".format(time.strftime("%Y%m%d%H%M%S"))
+        local("tar -cvzf versions/{} web_static".format(p_name))
+        return ("versions/{}".format(p_name))
+    except Exception:
         return None
-    else:
-        return "versions/{}".format(p_name)
 
 
 # distributes an archive to web servers
@@ -31,7 +29,8 @@ def do_deploy(archive_path):
         file_name = archive_path.split("/")[-1]
         file_name_no_ext = file_name.split(".")[0]
         run("sudo chown -R $USER:$USER /data/")
-        run("sudo mkdir -p /data/web_static/releases/{}/".format(file_name_no_ext))
+        run("sudo mkdir -p /data/web_static/releases/{}/"
+            .format(file_name_no_ext))
         run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
             .format(file_name, file_name_no_ext))
 
@@ -41,8 +40,10 @@ def do_deploy(archive_path):
 
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(file_name_no_ext))
-        run("sudo ln -sf /data/web_static/releases/test /data/web_static/current")
-        run("cp -r /data/web_static/current/web_static/* /data/web_static/current/")
+        run("sudo ln -sf\
+            /data/web_static/releases/test /data/web_static/current")
+        run("cp -r \
+            /data/web_static/current/web_static/* /data/web_static/current/")
         return True
-    except:
+    except Exception:
         return False
