@@ -10,10 +10,11 @@ from fabric.api import local
 
 
 def do_pack():
-    #Creates an archive compressing web_static folder
-    #    Returns:
-    #        returns none if the file wasn't created and the created
-    #        archive path if true
+    """Creates an archive compressing web_static folder
+        Returns:
+            returns none if the file wasn't created and the created
+            archive path if true
+    """
 
     local("mkdir -p versions")
     strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
