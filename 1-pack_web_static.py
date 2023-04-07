@@ -1,13 +1,12 @@
 #!/usr/bin/python3
-# creates a zipped file
+"""Creates a comperessed_static folder"""
 
 from datetime import datetime
 from fabric.api import local
 
 
 def do_pack():
-    """
-          Creates a comperessed_static folder
+    """Creates a comperessed_static folder
     """
     local("mkdir -p versions")
     strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
