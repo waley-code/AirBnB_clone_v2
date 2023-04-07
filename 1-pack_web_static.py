@@ -6,7 +6,7 @@ from fabric.api import local
 
 
 def do_pack():
-    """Creates a comperessed_static folder"""
+    """Creates an archive compressing web_static folder"""
     
     local("mkdir -p versions")
     strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
