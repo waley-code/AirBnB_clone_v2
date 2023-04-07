@@ -7,8 +7,8 @@ env.hosts = ['54.174.243.255', '54.208.245.251']
 
 # Creates a comperessed_static folder
 def do_pack():
-    """Creates a comperessed_static folder
-    """
+    """ Creates a comperessed_static folder. """
+
     local("mkdir -p versions")
     strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
     p_name = f"web_static_{strap_time}.tgz"

@@ -7,7 +7,8 @@ from fabric.api import local
 
 # Creates a comperessed_static folder
 def do_pack():
-    """Creates a .tgz archive compressing web_static folder"""
+    """ Creates a .tgz archive compressing web_static folder. """
+
     try:
         local("mkdir -p versions")
         strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
