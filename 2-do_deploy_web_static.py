@@ -41,7 +41,8 @@ def do_deploy(archive_path):
 
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(file_name_no_ext))
-
+        run("sudo ln -sf /data/web_static/releases/test /data/web_static/current")
+        run("cp -r /data/web_static/current/web_static/* /data/web_static/current/")
         return True
     except:
         return False
