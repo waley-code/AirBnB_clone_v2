@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-# creates a zipped file
+"""Creates a comperessed_static folder"""
 import os
 from datetime import datetime
 from fabric.api import local, run, put, env
 env.hosts = ['54.174.243.255', '54.208.245.251']
 
-
+# Creates a comperessed_static folder
 def do_pack():
-    """
-          Creates a comperessed_static folder
+    """Creates a comperessed_static folder
     """
     local("mkdir -p versions")
     strap_time = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -21,6 +20,7 @@ def do_pack():
         return "versions/{}".format(p_name)
 
 
+# distributes an archive to web servers
 def do_deploy(archive_path):
     """ that distributes an archive to web servers
     """
