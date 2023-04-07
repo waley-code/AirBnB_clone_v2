@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # checks if nginx is installed
 if [ ! -x "$(command -v nginx)" ]; then
-        sudo apt-get update
-        sudo apt-get install nginx -y
+          sudo apt-get update
+          sudo apt-get install nginx -y
 fi
 sudo mkdir -p /data/web_static/releases/test        
 sudo touch /data/web_static/releases/test/index.html

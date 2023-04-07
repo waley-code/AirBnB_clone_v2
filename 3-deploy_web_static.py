@@ -1,11 +1,15 @@
 #!/usr/bin/python3
-"""Creates a comperessed_static folder"""
-import os
+"""
+Fabric script to create and distribute an archive to web servers using deploy()
+"""
+
+from fabric.api import env, local, run, put
 from datetime import datetime
-from fabric.api import local, run, put, env
+import os
+
 env.hosts = ['54.174.243.255', '54.208.245.251']
 
-# Creates a comperessed_static folder
+
 def do_pack():
     """ Creates a comperessed_static folder. """
 
@@ -20,12 +24,13 @@ def do_pack():
         return "versions/{}".format(p_name)
 
 
-# distributes an archive to web servers
 def do_deploy(archive_path):
-    """ that distributes an archive to web servers
+    """
+    Distributes an archive to web servers
     """
     if not os.path.exists(archive_path):
         return False
+
     try:
         put(archive_path, "/tmp/")
         file_name = archive_path.split("/")[-1]
@@ -42,7 +47,17 @@ def do_deploy(archive_path):
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(file_name_no_ext))
         run("sudo ln -sf /data/web_static/releases/test /data/web_static/current")
-        run("cp -r /data/web_static/current/web_static/* /data/web_static/current/")
+        run(" cp /data/web_static/current/web_static/* /data/web_static/current/")
         return True
     except:
         return False
+
+
+def deploy():
+    """
+    deploys full project
+    """
+    path = do_pack()
+    if path is not None:
+        return do_deploy(path)
+    return False
