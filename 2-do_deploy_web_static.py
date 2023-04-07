@@ -30,6 +30,7 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         file_name = archive_path.split("/")[-1]
         file_name_no_ext = file_name.split(".")[0]
+        run("sudo chown -R $USER:$USER /data/")
         run("sudo mkdir -p /data/web_static/releases/{}/".format(file_name_no_ext))
         run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
             .format(file_name, file_name_no_ext))
@@ -40,6 +41,7 @@ def do_deploy(archive_path):
 
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(file_name_no_ext))
+        run("cp -r /data/web_static/current/web_static/* /data/web_static/current/")
 
         return True
     except:
