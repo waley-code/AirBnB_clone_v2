@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Creates a .tgz archive compressing its contents web_static folder."""
 from fabric.api import local
-import time
+from datetime import datetime
 
 
 def do_pack():
